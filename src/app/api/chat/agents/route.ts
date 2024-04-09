@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import get_weather from "@/app/utils/llm-tools/get_weather";
+import get_weather from "@/utils/llm-tools/get_weather";
 import {
     ChatPromptTemplate,
     MessagesPlaceholder,
@@ -13,7 +13,7 @@ import { OpenAIFunctionsAgentOutputParser } from "langchain/agents/openai/output
 import { convertToOpenAIFunction } from "@langchain/core/utils/function_calling";
 import { ChatOllama } from "@langchain/community/chat_models/ollama";
 import { Ollama } from "@langchain/community/llms/ollama";
-import get_my_location from "@/app/utils/llm-tools/get_my_location";
+import get_my_location from "@/utils/llm-tools/get_my_location";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY
 export function GET(req:NextRequest){
     return NextResponse.json({
@@ -67,7 +67,6 @@ export async function POST(req:NextRequest){
     const result = await executor.invoke({
         input: body.messages,
     });
-    console.log(result)
     return NextResponse.json({
         data: result
     },{
